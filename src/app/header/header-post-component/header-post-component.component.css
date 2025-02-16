@@ -1,0 +1,21 @@
+.heading {
+    display: flex;
+    justify-content: space-between;
+}
+
+.active-link {
+    color:rgb(0, 255, 98);
+}
+
+ul li {
+    list-style: none;
+    margin-left: 0;
+}
+ul {
+    padding-left: 0;
+    display: flex;
+}
+
+li {
+    margin: 0 1.5rem;
+}

@@ -1,0 +1,30 @@
+:host {
+    display: block;
+    margin-top: 1rem;
+}
+
+.post-container {
+    margin: 1rem;
+}
+
+p {
+    text-align: center;
+}
+
+mat-spinner {
+    margin: auto;
+}
+
+.image-path {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.image-path img {
+    width: 100%;
+}
+
+mat-paginator {
+    margin-top: 1rem;
+}
+

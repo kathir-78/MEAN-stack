@@ -1,0 +1,36 @@
+@if(isLoading) {
+    <mat-spinner></mat-spinner>
+}
+@if (posts.length !== 0) {
+    <mat-accordion>
+        @for (post of posts; track post.id) {
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{ post.title }}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                        {{ post.content }}
+                <div class="image-path">
+                    <img [src]="post.imagePath" [alt]="post.title">
+                </div>
+                
+                @if(userIsAuthenticated && userId===post.creater) {
+                <mat-action-row>
+                        <a mat-button [routerLink]="[ '/edit', post.id]">Edit</a>
+                       <button mat-button color="accent" (click)="post.id && deletePost(post.id)">DELETE</button>
+                </mat-action-row>
+                }
+            </mat-expansion-panel>
+        }
+    </mat-accordion>
+    <mat-paginator [length]="totalPosts"
+              [pageSize]="postsPerPage"
+              [pageSizeOptions]="[2, 5, 10, 25, 100]"
+              (page) = "onClickedPage($event)">
+    </mat-paginator>
+    
+} 
+@else {
+    <p  class="mat-subheading-1" color="accent" >No posts added yet!</p>
+}

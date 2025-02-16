@@ -1,0 +1,38 @@
+
+@if (isLoading) {
+    <mat-spinner></mat-spinner>
+}
+@else {
+<section class="login-container">
+    <header>
+        <h2>Login</h2>
+    </header>
+    <form (submit)="onSubmit(loginForm)" #loginForm="ngForm" class="login-form">
+        <mat-card >
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input
+                type="email"
+                matInput
+                ngModel
+                name="email"
+                required email #emailinput="ngModel">
+                @if(emailinput.invalid) {
+                    <mat-error> Please enter a valid email.</mat-error> }
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input
+                type="password"
+                matInput
+                ngModel
+                name="password"
+                required  #passinput="ngModel">
+                @if(passinput.control.value) {
+                    <mat-error> Password must be at least 6 characters long.</mat-error> }
+            </mat-form-field>
+                <button mat-stroked-button type="submit"  class="custom-red-button"> submit</button>
+        </mat-card>
+    </form>
+</section>
+}

@@ -1,0 +1,19 @@
+<mat-toolbar color="accent" class="heading">
+    <span routerLink="/">Message</span>
+    <nav>
+        <ul>
+            
+            @if(!userathenticatedIs) {
+                <li><a mat-button routerLink ="/signup" routerLinkActive="active-link">SignUp</a></li>
+                
+                <li><a mat-button routerLink ="/login" routerLinkActive="active-link">Login</a></li>
+            }
+            @else {
+                <li><a mat-button routerLink ="/create" routerLinkActive="active-link">New Post</a></li>
+    
+                <button mat-button (click)="onlogout()">logout</button>
+            }
+        </ul>
+    </nav>
+</mat-toolbar>
+  

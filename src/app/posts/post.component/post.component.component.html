@@ -1,0 +1,53 @@
+@if (isLoading) {
+    <mat-spinner></mat-spinner>
+}
+<form (submit)="onAddPost()" [formGroup]="form">
+    <mat-card >
+        <mat-form-field>
+            <mat-label>title</mat-label>
+            <input 
+            type="text" 
+            formControlName = "title"
+            matInput 
+            required>
+            @if(form.get('title')?.invalid) {
+                <mat-error>please enter the title</mat-error> }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>content</mat-label>
+            <textarea 
+            formControlName ="content"
+            matInput 
+            rows="6" 
+            required>
+            </textarea>
+            @if (form.get('content')?.invalid){
+                <mat-error>please enter the content</mat-error> 
+            }
+        </mat-form-field>
+        @if(post && !imagePreview){
+            <div class="image-path">
+                <img [src]="form.value.image" [alt]="form.value.title">
+            </div>
+        }
+
+        <div>
+            <input type="file" #input (change)="onImagePicked($event)">
+            <button mat-stroked-button type="button" (click)="input.click()">upload</button>
+        </div>
+
+        @if(imagePreview && form.get('image')?.valid) {
+            <div class="image-preview">
+                <img [src]="imagePreview" [alt]="form.value.title">
+            </div>
+        }
+        @if(form.get('image')?.invalid && imagePreview ) {
+            <mat-error>Select the png, jpg, jpeg format</mat-error>
+        }
+        @if(form.get('image')?.invalid && form.get('image')?.touched) {
+            <mat-error>please select the image</mat-error>
+        }
+
+            <button mat-stroked-button type="submit"  class="custom-red-button"> submit</button>
+    </mat-card>
+</form>
