@@ -3,9 +3,8 @@ import { Post } from '../models/post.model';
 import { Subject, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
+import { environment} from '../../environments/environment';
 
-const  URL = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +12,7 @@ const  URL = environment.apiUrl;
 
 export class PostServiceService {
 
+  private URL: string = environment.Url;
   private posts:Post[] = [];
   private postSubject = new Subject<{posts:Post [], totalPosts: number}>();  // event Emitter
   private totalPosts = 0;
@@ -30,7 +30,7 @@ export class PostServiceService {
     newPost.append('title', title);
     newPost.append('content', content);
     newPost.append('image', image);
-    this.http.post<{message: String, post: Post}>(URL, newPost)
+    this.http.post<{message: String, post: Post}>(this.URL, newPost)
     .subscribe((addedPost)=> {
       this.route.navigate(['/']);
     })
@@ -38,7 +38,7 @@ export class PostServiceService {
 
   getPosts(currtentPage: number, postsPerPage: number ) {
     const queryParams = `?pageSize=${postsPerPage}&page=${currtentPage}`;
-    this.http.get<{message: String, posts: any, totalPosts: number}>(URL+ queryParams)
+    this.http.get<{message: String, posts: any, totalPosts: number}>(this.URL+ queryParams)
     .pipe(map(postData => {
       this.totalPosts = postData.totalPosts;
       return  {
@@ -85,7 +85,7 @@ export class PostServiceService {
       }
     }
 
-    this.http.put<{message: String}>(URL + id, upDatePost)
+    this.http.put<{message: String}>(this.URL + id, upDatePost)
     .subscribe(() => {
       this.route.navigate(['/'])
     }, error => {
@@ -95,7 +95,7 @@ export class PostServiceService {
   }
 
   onDelete(_id: String) {
-    return this.http.delete<{ message: String }>(URL + _id)
+    return this.http.delete<{ message: String }>(this.URL + _id)
       .pipe(map(() => {
         // Update local posts array
         const updatedPosts = this.posts.filter(post => post.id !== _id);
@@ -109,7 +109,7 @@ export class PostServiceService {
   }
 
   getPost(id: string) {
-    return this.http.get<{onepost:Post, message:String }>(URL + id);
+    return this.http.get<{onepost:Post, message:String }>(this.URL + id);
   }
 
   getTotalPosts() {

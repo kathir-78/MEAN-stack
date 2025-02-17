@@ -5,12 +5,15 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 
-const   URL = environment.apiUrl + 'user';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  private URL: string = environment.Url + 'user';
+
 
   private userIsAuthenticate = false;
   userId!:string;
@@ -25,7 +28,7 @@ export class AuthService {
 
   addUser(email: string, password: string) {
     const user: Auth = { email, password}
-    this.http.post(URL+'/signup', user)
+    this.http.post(this.URL+'/signup', user)
     .subscribe({
       next: (response) => {
         console.log(response);
@@ -38,7 +41,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     const user: Auth = { email, password} 
-    this.http.post<{message: string, token: any, userid: string}>(URL+'/login', user)
+    this.http.post<{message: string, token: any, userid: string}>(this.URL+'/login', user)
     .subscribe({
       next: (response) => {
       this.token = response.token;
